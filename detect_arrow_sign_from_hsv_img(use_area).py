@@ -1,0 +1,49 @@
+import numpy as np
+import cv2
+import sys, os
+
+
+# 検証用の画像を用意する
+# img = np.full((500, 500, 3), 128, dtype=np.uint8)  # 500x500ピクセルの画像を用意し、グレー単色で塗りつぶす
+img = cv2.imread("data/sample/1_left.jpg")  # 指定の画像を読み込む
+
+# 用意した画像に矢印を行場する
+# img = cv2.arrowedLine(img, (100, 250), (400, 250), (255, 0, 127), thickness=80, tipLength=0.5)
+img = cv2.arrowedLine(img, (200, 300), (300, 300), (255, 0, 255), thickness=50, tipLength=0.5)
+# cv2.imshow("", img)
+# cv2.waitKey(0)
+
+# HSVに変換する
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+# 色フィルター設定
+upper = np.array([160, 255, 255])
+lower = np.array([140, 100, 100])
+
+# マスク処理
+mask = cv2.inRange(hsv, lower, upper)
+ret = cv2.bitwise_and(img, img, mask=mask)
+
+# cv2.imshow("", mask)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+# sys.exit()
+
+# 矢印の外接矩形を検出
+cnts, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)  # 輪郭抽出
+x, y, w, h = cv2.boundingRect(cnts[0])  # 外接矩形を求める
+# print(x, y, w, h)
+arrow = mask[y:y+h, x:x+w]  # 矢印の領域だけ切り出す
+
+# 面積から左右を検出
+y, x = arrow.shape
+left = arrow[:, :x//2]  # 左半分を切り出す
+right = arrow[:, x//2:]  # 右半分を切り出す
+if right.sum() > left.sum():
+    print("use area: right")
+else:
+    print("use area: left")
+
+cv2.imshow("", mask)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
