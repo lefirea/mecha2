@@ -14,42 +14,42 @@ class ImageMaskingClass:
         return result, self.mask
 
 
-class StopSign(ImageMaskingClass):  #
+class StopSign(ImageMaskingClass):
     def __init__(self):
         super(StopSign).__init__()
         self.upper = np.array([30, 255, 255])
         self.lower = np.array([20, 100, 100])
 
 
-class Speed10Sign(ImageMaskingClass):  #
+class Speed10Sign(ImageMaskingClass):
     def __init__(self):
         super(Speed10Sign).__init__()
         self.upper = np.array([5, 255, 255])
         self.lower = np.array([0, 100, 100])
 
 
-class Speed50Sign(ImageMaskingClass):  #
+class Speed50Sign(ImageMaskingClass):
     def __init__(self):
         super(Speed50Sign).__init__()
         self.upper = np.array([115, 255, 255])
         self.lower = np.array([105, 100, 100])
 
 
-class Speed100Sign(ImageMaskingClass):  #
+class Speed100Sign(ImageMaskingClass):
     def __init__(self):
         super(Speed100Sign).__init__()
         self.upper = np.array([50, 255, 255])
         self.lower = np.array([40, 100, 100])
 
 
-class RightSign(ImageMaskingClass): #====
+class RightSign(ImageMaskingClass):
     def __init__(self):
         super(RightSign).__init__()
         self.upper = np.array([85, 255, 255])
         self.lower = np.array([75, 100, 100])
 
 
-class LeftSign(ImageMaskingClass):  #
+class LeftSign(ImageMaskingClass):
     def __init__(self):
         super(LeftSign).__init__()
         self.upper = np.array([140, 255, 255])
